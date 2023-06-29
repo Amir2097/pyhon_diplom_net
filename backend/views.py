@@ -217,7 +217,7 @@ class ProviderUpdate(APIView):
     throttle_scope = 'change_price'
 
     def post(self, request, *args, **kwargs):
-        if request.user.type != 'shop':
+        if request.user.type != 'backend':
             return Response({'status': False, 'error': 'Только для магазинов'}, status=status.HTTP_403_FORBIDDEN)
 
         url = request.data.get('url')
@@ -233,8 +233,8 @@ class ProviderUpdate(APIView):
                 data = load_yaml(stream, Loader=Loader)
 
                 shop, _ = Shop.objects.get_or_create(user_id=request.user.id,
-                                                     defaults={'name': data['shop'], 'url': url})
-                if shop.name != data['shop']:
+                                                     defaults={'name': data['backend'], 'url': url})
+                if shop.name != data['backend']:
                     return Response({'status': False, 'error': 'В файле указано некорректное название магазина!'},
                                     status=status.HTTP_400_BAD_REQUEST)
 
@@ -251,7 +251,7 @@ class ProviderState(APIView):
         '''
         получение статуса магазина
         '''
-        if request.user.type != 'shop':
+        if request.user.type != 'backend':
             return Response({'status': False, 'error': 'Только для магазинов'}, status=status.HTTP_403_FORBIDDEN)
 
         shop = request.user.shop
@@ -262,7 +262,7 @@ class ProviderState(APIView):
         '''
         изменить статус магазина
         '''
-        if request.user.type != 'shop':
+        if request.user.type != 'backend':
             return Response({'status': False, 'error': 'Только для магазинов'}, status=status.HTTP_403_FORBIDDEN)
 
         state = request.data.get('state')
@@ -283,7 +283,7 @@ class ProviderOrders(APIView):
         '''
         получение сформированных заказов поставщиками
         '''
-        if request.user.type != 'shop':
+        if request.user.type != 'backend':
             return Response({'status': False, 'error': 'Только для магазинов'}, status=status.HTTP_403_FORBIDDEN)
 
         pr = Prefetch('ordered_items', queryset=OrderItem.objects.filter(shop__user_id=request.user.id))
@@ -331,7 +331,7 @@ class ProductView(APIView):
 
         queryset = Product.objects.filter(
             query).select_related(
-            'shop', 'category').prefetch_related(
+            'backend', 'category').prefetch_related(
             'product_parameters').distinct()
 
         serializer = ProductSerializer(queryset, many=True)
@@ -370,8 +370,8 @@ class BasketView(APIView):
                 objects_created = 0
                 for order_item in items_dict:
                     order_item.update({'order': basket.id})
-                    product = Product.objects.filter(external_id=order_item['external_id']).values('category', 'shop', 'name', 'price')
-                    order_item.update({'category': product[0]['category'], 'shop': product[0]['shop'], 'product_name': product[0]['name'], 'price': product[0]['price']})
+                    product = Product.objects.filter(external_id=order_item['external_id']).values('category', 'backend', 'name', 'price')
+                    order_item.update({'category': product[0]['category'], 'backend': product[0]['backend'], 'product_name': product[0]['name'], 'price': product[0]['price']})
                     serializer = OrderItemAddSerializer(data=order_item)
                     if serializer.is_valid():
                         try:

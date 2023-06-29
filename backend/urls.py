@@ -4,7 +4,7 @@ from .views import RegisterUser, LoginUser, UserDetails, ContactView, \
     ProviderUpdate, ProviderState, ProductView, BasketView, OrderView, ProviderOrders, CategoryView, ShopView, \
     ConfirmAccount, MainPage
 
-app_name = 'backendAPI'
+app_name = 'backend'
 
 urlpatterns = [
     path('user/register', RegisterUser.as_view(), name='user-register'),

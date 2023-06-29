@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class BackendapiConfig(AppConfig):
-    name = 'backendAPI'
+    name = 'backend'

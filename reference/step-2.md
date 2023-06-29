@@ -66,7 +66,7 @@ STATE_CHOICES = (
 )
 
 USER_TYPE_CHOICES = (
-    ('shop', 'Магазин'),
+    ('backend', 'Магазин'),
     ('buyer', 'Покупатель'),
 
 )
@@ -210,7 +210,7 @@ class ProductInfo(models.Model):
         verbose_name = 'Информация о продукте'
         verbose_name_plural = "Информационный список о продуктах"
         constraints = [
-            models.UniqueConstraint(fields=['product', 'shop', 'external_id'], name='unique_product_info'),
+            models.UniqueConstraint(fields=['product', 'backend', 'external_id'], name='unique_product_info'),
         ]
 
 
