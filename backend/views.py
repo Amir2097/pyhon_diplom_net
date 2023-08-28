@@ -18,6 +18,7 @@ from ujson import loads as load_json
 from .serializers import UserSerializer, ContactSerializer, ShopSerializer, CategorySerializer, \
     ProductSerializer, OrderSerializer, OrderItemAddSerializer
 from .models import ConfirmEmailToken, Contact, Shop, Category, Product, Order, OrderItem
+from rest_framework.viewsets import ModelViewSet
 
 
 class MainPage(APIView):
@@ -305,7 +306,7 @@ class ShopView(ListAPIView):
     serializer_class = ShopSerializer
 
 
-class CategoryView(ListAPIView):
+class CategoryViewSet(ModelViewSet):
     '''
     просмотр категорий
     '''
