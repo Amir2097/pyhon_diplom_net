@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django_rest_passwordreset',
     'rest_framework',
     'rest_framework.authtoken',
+    'drf_spectacular',
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -166,6 +167,13 @@ REST_FRAMEWORK = {
     }
 }
 
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Product API',
+    'DESCRIPTION': 'Description my product API',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+}
 
 # celery settings
 CELERY_BROKER_URL = 'redis://localhost:6379'
