@@ -3,7 +3,7 @@ from django.core.validators import URLValidator
 from django.http import JsonResponse
 from rest_framework.exceptions import ValidationError
 from yaml import load, Loader
-from .models import ProductInfo, Product, Parameter, ProductParameter, Category, Shop
+from .models import Product, Parameter, ProductParameter, Category, Shop
 from celery import shared_task
 
 
@@ -49,7 +49,7 @@ def update_price(request, *args, **kwargs):
                     name=item['name'],
                     category=item['category']
                 )
-                product_info = ProductInfo.objects.create(
+                product_info = Product.objects.create(
                     external_id=item['id'],
                     model=item['model'],
                     shop=shop.id,
